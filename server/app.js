@@ -22,7 +22,7 @@ app.use(cors({
   origin: (origin, callback) => {
     // Allow same-origin, whitelisted origins, and browser extensions
     if (!origin || ALLOWED_ORIGINS.has(origin) || /^chrome-extension:\/\//.test(origin) || /^moz-extension:\/\//.test(origin)) {
-      callback(null, origin || '*');
+      callback(null, true);
     } else {
       callback(new Error('Not allowed by CORS'));
     }

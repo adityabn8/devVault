@@ -1,7 +1,19 @@
 /* ── Config ─────────────────────────────────────── */
-const API_URL    = 'http://localhost:5000/api';
-const CLIENT_URL = 'http://localhost:3000';
-const TOKEN_KEY  = 'dv_token';
+const TOKEN_KEY = 'dv_token';
+
+let API_URL    = CONFIG.prod.apiUrl;
+let CLIENT_URL = CONFIG.prod.clientUrl;
+
+// Detect dev mode (extension loaded unpacked) and switch URLs
+const envReady = new Promise(resolve => {
+  chrome.management.getSelf(info => {
+    if (info.installType === 'development') {
+      API_URL    = CONFIG.dev.apiUrl;
+      CLIENT_URL = CONFIG.dev.clientUrl;
+    }
+    resolve();
+  });
+});
 
 /* ── State ──────────────────────────────────────── */
 let currentTab  = null;
@@ -52,6 +64,7 @@ function faviconUrl(url) {
 
 /* ── Entry point ────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', async () => {
+  await envReady;
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
   currentTab = tab;
 
