@@ -18,7 +18,7 @@ router.get(
       httpOnly: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     });
     res.redirect(`${process.env.CLIENT_URL}/dashboard`);
   }
