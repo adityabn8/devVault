@@ -7,7 +7,7 @@
     "default_popup": "popup.html",
     "default_title": "Save to DevVault"
   },
-  "permissions": ["activeTab", "storage", "tabs"],
+  "permissions": ["activeTab", "storage", "tabs", "management"],
   "host_permissions": [
     "http://localhost:5000/*",
     "https://*/*"

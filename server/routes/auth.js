@@ -33,8 +33,12 @@ router.get('/extension-token', authMiddleware, (req, res) => {
 });
 
 // POST /api/auth/logout
-router.post('/logout', authMiddleware, (req, res) => {
-  res.clearCookie('token');
+router.post('/logout', (_req, res) => {
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+  });
   res.json({ message: 'Logged out successfully' });
 });
 
