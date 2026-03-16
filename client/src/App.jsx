@@ -9,6 +9,7 @@ import Navbar from './components/layout/Navbar';
 import MobileMenu from './components/layout/MobileMenu';
 import SearchModal from './components/search/SearchModal';
 import Login from './pages/Login';
+import AuthCallback from './pages/AuthCallback';
 import useKeyboardShortcut from './hooks/useKeyboardShortcut';
 
 // Lazy-loaded pages
@@ -64,6 +65,7 @@ const App = () => (
         <ToastProvider>
           <Routes>
             <Route path="/" element={<Login />} />
+            <Route path="/auth/callback" element={<AuthCallback />} />
             <Route path="/shared/:token" element={<SharedVault />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/*" element={<AppLayout />} />

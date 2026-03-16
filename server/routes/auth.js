@@ -20,7 +20,7 @@ router.get(
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     });
-    res.redirect(`${process.env.CLIENT_URL}/dashboard`);
+    res.redirect(`${process.env.CLIENT_URL}/auth/callback?token=${token}`);
   }
 );
 
