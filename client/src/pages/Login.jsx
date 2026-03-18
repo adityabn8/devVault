@@ -8,7 +8,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const authError = searchParams.get('error') === 'auth_failed';
-  const serverUrl = (process.env.REACT_APP_API_URL || 'http://localhost:5000/api').replace(/\/api\/?$/, '');
+  const serverUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
   useEffect(() => {
     if (!loading && user) navigate('/dashboard', { replace: true });
