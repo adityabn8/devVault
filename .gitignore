@@ -16,6 +16,9 @@ server/dist/
 *.log
 npm-debug.log*
 
+# IDE
+.vscode/
+
 # OS
 .DS_Store
 Thumbs.db
