@@ -36,7 +36,7 @@ const Login = () => {
         )}
 
         <a
-          href={`${serverUrl}/api/auth/github`}
+          href={`${serverUrl}/auth/github`}
           className="flex items-center justify-center gap-3 w-full px-4 py-3 bg-gray-900 hover:bg-gray-800 dark:bg-gray-700 dark:hover:bg-gray-600 text-white rounded-lg font-medium text-sm transition-colors"
         >
           <Github className="w-5 h-5" />

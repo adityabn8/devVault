@@ -34,19 +34,19 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(globalLimiter);
 
-app.use('/api/auth', authRoutes);
-app.use('/api/vaults', vaultRoutes);
-app.use('/api/profile', profileRoutes);
-app.use('/api/resources', resourceRoutes);
-app.use('/api/dashboard', dashboardRoutes);
-app.use('/api/search', searchRoutes);
+app.use('/auth', authRoutes);
+app.use('/vaults', vaultRoutes);
+app.use('/profile', profileRoutes);
+app.use('/resources', resourceRoutes);
+app.use('/dashboard', dashboardRoutes);
+app.use('/search', searchRoutes);
 
-app.get('/api/health', (req, res) => {
+app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 // Public shared vault endpoint
-app.get('/api/shared/:token', async (req, res) => {
+app.get('/shared/:token', async (req, res) => {
   try {
     const Vault = require('./models/Vault');
     const vault = await Vault.findOne({ shareLink: req.params.token, isPublic: true })
