@@ -14,7 +14,7 @@ jobs:
         run: echo "Hello, world!"
       
       - name: Runner VM
-        run: echo "This job is running on a $RUNNER_OS runner."
+        run: echo "This job is running on a ${{ runner.os }} runner."
 
       - name: Triggerer
         run: echo "This job was triggered by ${{ github.actor }}."
