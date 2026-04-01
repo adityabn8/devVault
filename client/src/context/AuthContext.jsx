@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await logoutService();
     } finally {
+      localStorage.removeItem('dv_token');
       dispatch({ type: 'LOGOUT' });
     }
   }, []);
