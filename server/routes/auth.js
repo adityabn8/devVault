@@ -9,20 +9,20 @@ const router = express.Router();
 router.get('/github', passport.authenticate('github', { session: false, scope: ['read:user', 'user:email'] }));
 
 // GET /api/auth/github/callback
-router.get(
-  '/github/callback',
-  passport.authenticate('github', { session: false, failureRedirect: `${process.env.CLIENT_URL}/login?error=auth_failed` }),
-  (req, res) => {
-    const token = jwt.sign({ userId: req.user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-    res.cookie('token', token, {
-      httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    });
+router.get('/github/callback', (req, res, next) => {
+  passport.authenticate('github', { session: false }, (err, user, info) => {
+    if (err) {
+      console.error('[OAuth] Error:', err.message);
+      return res.redirect(`${process.env.CLIENT_URL}/?error=auth_failed`);
+    }
+    if (!user) {
+      console.error('[OAuth] No user returned:', info);
+      return res.redirect(`${process.env.CLIENT_URL}/?error=auth_failed`);
+    }
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
     res.redirect(`${process.env.CLIENT_URL}/auth/callback?token=${token}`);
-  }
-);
+  })(req, res, next);
+});
 
 // GET /api/auth/extension-token
 // Called by the browser extension after the user is already logged in via the web app.

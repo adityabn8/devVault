@@ -14,12 +14,12 @@ Full-stack developer learning tracker. React SPA + Express REST API, deployed on
 
 ## Local Dev Setup
 1. `server/.env` — copy from `server/.env.example` (needs `MONGODB_URI`, `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `JWT_SECRET`, `CLIENT_URL=http://localhost:3000`, `SERVER_URL=http://localhost:5000`)
-2. `client/.env` — copy from `client/.env.example` (`REACT_APP_API_URL=http://localhost:5000/api`)
+2. `client/.env` — copy from `client/.env.example` (`REACT_APP_API_URL=http://localhost:5000`)
 3. `cd server && npm run dev`
 4. `cd client && npm start`
 
 ## Key Conventions
-- **API base:** all routes are under `/api/` — client uses `REACT_APP_API_URL` env var
+- **API base:** client uses `REACT_APP_API_URL` env var (just the server origin, no `/api` suffix)
 - **Auth middleware:** `server/middleware/auth.js` — reads JWT from `req.cookies.token` OR `Authorization: Bearer`
 - **Error shape:** `{ error: { code, message } }` — always use this shape from the server
 - **CORS:** allows `CLIENT_URL` origin + `chrome-extension://` and `moz-extension://` origins
