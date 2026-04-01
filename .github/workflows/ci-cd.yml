@@ -15,7 +15,7 @@ jobs:
         run: echo "Hello, world!"
       
       - name: Push Triggered
-        run: echo "This job is triggered by $GITHUB_EVENT_NAME runner."
+        run: echo "This job is triggered by ${{ github_event_name }}."
 
       - name: Branch Name
-        run: echo "Branch is $GITHUB_REF_NAME."
+        run: echo "Branch is ${{ github.ref_name }}."
