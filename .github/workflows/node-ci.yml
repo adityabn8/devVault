@@ -17,7 +17,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: INstall dependencies
+      - name: Install client dependencies
+        working-directory: ./client
+        run: npm ci
+      - name: Install serevr dependencies
+        working-directory: ./server
         run: npm ci
       - name: Print node and npm versions
         run: |
