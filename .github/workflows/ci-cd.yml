@@ -8,27 +8,44 @@ on:
   workflow_dispatch:
 
 jobs:
-  node-ci:
+  frontend:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Set up node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Install client dependencies
+
+      - name: Install dependencies
         working-directory: ./client
         run: npm ci
-      - name: Install serevr dependencies
-        working-directory: ./server
-        run: npm ci
-      - name: Linting client
+
+      - name: Linting
         working-directory: ./client
         run: npm run lint
-      - name: Linting server
-        working-directory: ./server
-        run: npm run lint
-      - name: Build test client
+        
+      - name: Building
         working-directory: ./client
         run: npm run build
+  
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: ./server
+        run: npm ci
+
+      - name: Linting
+        working-directory: ./server
+        run: npm run lint
