@@ -1,0 +1,22 @@
+name: NODE CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  - name: Checkout code
+    uses: actions/checkout@v4
+  - name: Set up node
+    uses: actions/setup-node@v4
+    with:
+      node-version: '20'
+  - name: INstall dependencies
+    run: npm ci
+  - name: Print node and npm versions
+    run: |
+      node --version
+      npm --version
