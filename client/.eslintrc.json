@@ -1,3 +1,8 @@
 {
-  "extends": ["react-app", "react-app/jest"]
+  "extends": ["react-app", "react-app/jest"],
+  "rules": {
+    "no-unused-vars": "error",    // upgrade warning → error
+    "no-console": "warn",         // warn on console.log
+    "no-debugger": "error"        // error on debugger statements
+  }
 }

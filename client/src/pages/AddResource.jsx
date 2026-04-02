@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Link2, Code, Loader2 } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { Link2, Code } from 'lucide-react';
 import { extractMetadata, createResource } from '../services/resourceService';
 import { getVaults } from '../services/vaultService';
 import TagInput from '../components/common/TagInput';
@@ -16,9 +16,7 @@ const labelCls = 'block text-sm font-medium text-gray-700 dark:text-gray-300 mb-
 const AddResource = () => {
   const [activeTab, setActiveTab] = useState('url');
   const [vaults, setVaults] = useState([]);
-  const [vaultsLoading, setVaultsLoading] = useState(true);
   const { addToast } = useToast();
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const defaultVault = searchParams.get('vault') || '';
 
@@ -26,7 +24,7 @@ const AddResource = () => {
     getVaults().then(({ data }) => {
       const editable = (data.vaults || []).filter((v) => v.isOwner || v.permission === 'edit');
       setVaults(editable);
-    }).finally(() => setVaultsLoading(false));
+    });
   }, []);
 
   // URL tab state

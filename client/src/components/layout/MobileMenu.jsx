@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate, Link } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, FolderOpen, PlusCircle, LogOut, X, User } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import ThemeToggle from '../common/ThemeToggle';

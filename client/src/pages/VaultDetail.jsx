@@ -10,19 +10,16 @@ import LoadingSpinner from '../components/common/LoadingSpinner';
 import ResourceCard from '../components/resources/ResourceCard';
 import ResourceFilters from '../components/resources/ResourceFilters';
 import { useToast } from '../context/ToastContext';
-import { useAuth } from '../context/AuthContext';
 
 const ICON_MAP = { folder: Folder, code: Code, book: BookOpen, globe: Globe, database: Database, server: Server, terminal: Terminal, cpu: Cpu, cloud: Cloud, lock: Lock };
 
 const VaultDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { user } = useAuth();
   const { addToast } = useToast();
 
   const [vault, setVault] = useState(null);
   const [resources, setResources] = useState([]);
-  const [pagination, setPagination] = useState({});
   const [loading, setLoading] = useState(true);
   const [resourcesLoading, setResourcesLoading] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
@@ -58,7 +55,6 @@ const VaultDetail = () => {
       if (filters.type) params.type = filters.type;
       const { data } = await getResources(params);
       setResources(data.resources || []);
-      setPagination(data.pagination || {});
     } catch {
       setResources([]);
     } finally {

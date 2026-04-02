@@ -6,7 +6,6 @@ import { oneLight, oneDark } from 'react-syntax-highlighter/dist/esm/styles/pris
 import ReactMarkdown from 'react-markdown';
 import { getResource, updateResource, deleteResource, moveResource } from '../services/resourceService';
 import { getVaults } from '../services/vaultService';
-import StatusBadge from '../components/resources/StatusBadge';
 import ConfirmDialog from '../components/common/ConfirmDialog';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import TagInput from '../components/common/TagInput';

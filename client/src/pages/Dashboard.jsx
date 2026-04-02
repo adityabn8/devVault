@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Flame, BookOpen, CheckCircle, Code, TrendingUp, Clock } from 'lucide-react';
+import { Flame, BookOpen, CheckCircle, Code, TrendingUp } from 'lucide-react';
 import { getStats, getHeatmap, getActivity, getContinueLearning } from '../services/dashboardService';
 import { useAuth } from '../context/AuthContext';
 import LoadingSpinner from '../components/common/LoadingSpinner';
-import { getGreeting, formatRelativeTime, formatDate } from '../utils/formatters';
+import { getGreeting, formatRelativeTime } from '../utils/formatters';
 
 const ACTION_LABELS = {
   resource_saved: 'Saved a resource',
