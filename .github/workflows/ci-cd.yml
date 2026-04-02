@@ -26,3 +26,6 @@ jobs:
       - name: Linting client
         working-directory: ./client
         run: npm run lint
+      - name: Linting server
+        working-directory: ./server
+        run: npm run lint
