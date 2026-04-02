@@ -52,17 +52,13 @@ router.get('/stats', async (req, res, next) => {
     let longestStreak = 0;
     let tempStreak = 0;
     const today = new Date().toISOString().slice(0, 10);
-    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
     let checkDate = activeDays.has(today) ? new Date() : new Date(Date.now() - 86400000);
 
-    while (true) {
-      const dateStr = checkDate.toISOString().slice(0, 10);
-      if (activeDays.has(dateStr)) {
-        currentStreak++;
-        checkDate = new Date(checkDate.getTime() - 86400000);
-      } else {
-        break;
-      }
+    let dateStr = checkDate.toISOString().slice(0, 10);
+    while (activeDays.has(dateStr)) {
+      currentStreak++;
+      checkDate = new Date(checkDate.getTime() - 86400000);
+      dateStr = checkDate.toISOString().slice(0, 10);
     }
 
     // Longest streak

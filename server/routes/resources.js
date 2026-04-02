@@ -3,7 +3,7 @@ const authMiddleware = require('../middleware/auth');
 const Resource = require('../models/Resource');
 const Vault = require('../models/Vault');
 const { logActivity } = require('../services/activityService');
-const { extractMetadata, detectType } = require('../services/metadataService');
+const { extractMetadata } = require('../services/metadataService');
 const { metadataLimiter } = require('../middleware/rateLimit');
 
 const router = express.Router();
