@@ -20,6 +20,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+      
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ./client/node_modules
+          key: ${{ runner.os }}-client-${{ hashFiles('client/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-client-
 
       - name: Install dependencies
         working-directory: ./client
@@ -54,6 +62,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      - name: Caching the node modules
+        uses: actions/cache@v4
+        with:
+          path: ./server/node_modules
+          key: ${{ runner.os }}-server-${{ hashFiles('server/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-server-
 
       - name: Install dependencies
         working-directory: ./server
