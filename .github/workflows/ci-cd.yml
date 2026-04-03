@@ -10,6 +10,8 @@ on:
 jobs:
   frontend:
     runs-on: ubuntu-latest
+    outputs:
+      build_version: ${{ steps.build_version.outputs.value }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -30,6 +32,10 @@ jobs:
       - name: Building
         working-directory: ./client
         run: npm run build
+      
+      - name: Set version
+        id: build_version
+        run: echo "value=1.0.${{ github.run_number }}" >> $GITHUB_OUTPUT
   
   backend:
     runs-on: ubuntu-latest
@@ -59,4 +65,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy to production
-        run: echo "Deploying to production..."
+        run: echo "Deploying version ${{ needs.frontend.outputs.build_version.value }} to production..."
