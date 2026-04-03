@@ -22,6 +22,7 @@ jobs:
           node-version: '20'
       
       - name: Cache node modules
+        id: client-cache
         uses: actions/cache@v4
         with:
           path: ./client/node_modules
@@ -30,6 +31,7 @@ jobs:
             ${{ runner.os }}-client-
 
       - name: Install dependencies
+        if: ${{ steps.client-cache.outputs.cache-hit != 'true' }}
         working-directory: ./client
         run: npm ci
 
@@ -64,6 +66,7 @@ jobs:
           node-version: '20'
 
       - name: Caching the node modules
+        id: server-cache
         uses: actions/cache@v4
         with:
           path: ./server/node_modules
@@ -72,6 +75,7 @@ jobs:
             ${{ runner.os }}-server-
 
       - name: Install dependencies
+        if: ${{ steps.server-cache.outputs.cache-hit != 'true' }}
         working-directory: ./server
         run: npm ci
 
