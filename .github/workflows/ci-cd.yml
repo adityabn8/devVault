@@ -148,4 +148,4 @@ jobs:
         run: ls -la ./client-build
       
       - name: Deploy to production
-        run: echo "Deploying version ${{ needs.frontend.outputs.build_version }} to production..."
+        run: echo "Deploying version ${{ needs.frontend.outputs.build_version }} to production...."
