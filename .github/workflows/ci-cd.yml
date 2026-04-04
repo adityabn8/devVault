@@ -116,6 +116,7 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/devvault-client:${{ github.sha }}
           cache-from: type=gha, scope=client
           cache-to: type=gha, scope=client, mode=max
+          target: build
       - name: Build and push the server images
         uses: docker/build-push-action@v5
         with:
