@@ -106,3 +106,26 @@ jobs:
       
       - name: Deploy to production
         run: echo "Deploying version ${{ needs.frontend.outputs.build_version }} to production..."
+  
+  docker-build:
+    name: Docker Build
+    needs: [ frontend, backend ]
+    runs-on: ubuntu-latest
+    if: ${{ github.ref_name == 'main' && github.event_name == 'push' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Build frontend image
+        run: |
+          docker build \
+            -t devvault-client:latest \
+            -t devvault-client:${{ github.sha }} \
+            ./client
+      - name: Build the backend image
+        run: |
+          docker build \
+            -t devvault-server:latest \
+            -t devvault-server:${{ github.sha }} \
+            ./server
+      - name: Verify images
+        run: docker images
