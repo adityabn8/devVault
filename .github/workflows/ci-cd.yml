@@ -104,22 +104,28 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build frontend image
-        run: |
-          docker build \
-            -t ghcr.io/${{ github.repository_owner }}/devvault-client:latest \
-            -t ghcr.io/${{ github.repository_owner }}/devvault-client:${{ github.sha }} \
-            ./client
-          docker push ghcr.io/${{ github.repository_owner }}/devvault-client:latest
-          docker push ghcr.io/${{ github.repository_owner }}/devvault-client:${{ github.sha }}
-      - name: Build the backend image
-        run: |
-          docker build \
-            -t ghcr.io/${{ github.repository_owner }}/devvault-server:latest \
-            -t ghcr.io/${{ github.repository_owner }}/devvault-server:${{ github.sha }} \
-            ./server
-          docker push ghcr.io/${{ github.repository_owner }}/devvault-server:latest
-          docker push ghcr.io/${{ github.repository_owner }}/devvault-server:${{ github.sha }}
+      - name: Set up the Docker buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and push client images
+        uses: docker/build-push-action@v5
+        with:
+          context: ./client
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/devvault-client:latest
+            ghcr.io/${{ github.repository_owner }}/devvault-client:${{ github.sha }}
+          cache-from: type=gha, scope=client
+          cache-to: type=gha, scope=client, mode=max
+      - name: Build and push the server images
+        uses: docker/build-push-action@v5
+        with:
+          context: ./server
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/devvault-server:latest
+            ghcr.io/${{ github.repository_owner }}/devvault-server:${{ github.sha }}
+          cache-from: type=gha, scope=server
+          cache-to: type=gha, scope=server, mode=max
       - name: Verify images
         run: docker images ghcr.io/${{ github.repository_owner }}
 
@@ -143,3 +149,6 @@ jobs:
       
       - name: Deploy to production
         run: echo "Deploying version ${{ needs.frontend.outputs.build_version }} to production..."
+
+
+# first commit
