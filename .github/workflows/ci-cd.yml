@@ -92,23 +92,36 @@ jobs:
     needs: [ frontend, backend ]
     runs-on: ubuntu-latest
     if: ${{ github.ref_name == 'main' && github.event_name == 'push' }}
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build frontend image
         run: |
           docker build \
-            -t devvault-client:latest \
-            -t devvault-client:${{ github.sha }} \
+            -t ghcr.io/${{ github.repository_owner }}/devvault-client:latest \
+            -t ghcr.io/${{ github.repository_owner }}/devvault-client:${{ github.sha }} \
             ./client
+          docker push ghcr.io/${{ github.repository_owner }}/devvault-client:latest
+          docker push ghcr.io/${{ github.repository_owner }}/devvault-client:${{ github.sha }}
       - name: Build the backend image
         run: |
           docker build \
-            -t devvault-server:latest \
-            -t devvault-server:${{ github.sha }} \
+            -t ghcr.io/${{ github.repository_owner }}/devvault-server:latest \
+            -t ghcr.io/${{ github.repository_owner }}/devvault-server:${{ github.sha }} \
             ./server
+          docker push ghcr.io/${{ github.repository_owner }}/devvault-server:latest
+          docker push ghcr.io/${{ github.repository_owner }}/devvault-server:${{ github.sha }}
       - name: Verify images
-        run: docker images
+        run: docker images ghcr.io/${{ github.repository_owner }}
 
 
   deploy:
