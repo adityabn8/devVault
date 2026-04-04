@@ -86,26 +86,6 @@ jobs:
       - name: Linting
         working-directory: ./server
         run: npm run lint
-
-  deploy:
-    needs: [ frontend, backend ]
-    runs-on: ubuntu-latest
-    if: ${{ github.ref_name == 'main' && github.event_name == 'push' }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: frontend-build
-          path: ./client-build
-      
-      - name: Verify build files exist
-        run: ls -la ./client-build
-      
-      - name: Deploy to production
-        run: echo "Deploying version ${{ needs.frontend.outputs.build_version }} to production..."
   
   docker-build:
     name: Docker Build
@@ -129,3 +109,24 @@ jobs:
             ./server
       - name: Verify images
         run: docker images
+
+
+  deploy:
+    needs: [ frontend, backend, docker-build ]
+    runs-on: ubuntu-latest
+    if: ${{ github.ref_name == 'main' && github.event_name == 'push' }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-build
+          path: ./client-build
+      
+      - name: Verify build files exist
+        run: ls -la ./client-build
+      
+      - name: Deploy to production
+        run: echo "Deploying version ${{ needs.frontend.outputs.build_version }} to production..."
