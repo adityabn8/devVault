@@ -25,7 +25,6 @@ const AppLayout = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [dummy, setDummy] = useState(null); // Dummy state to trigger re-render for keyboard shortcut
 
   useKeyboardShortcut(['ctrl+k'], () => setSearchOpen(true));
 
