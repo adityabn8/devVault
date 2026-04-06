@@ -25,6 +25,7 @@ const AppLayout = () => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [dummy, setDummy] = useState(null);
 
   useKeyboardShortcut(['ctrl+k'], () => setSearchOpen(true));
 
